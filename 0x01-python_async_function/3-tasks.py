@@ -1,42 +1,20 @@
 #!/usr/bin/env python3
 """
-Module for asyncio task creation.
+This module provides a function to create an asyncio task
+that waits for a random delay.
 """
 import asyncio
-from typing import Coroutine
-
-
-async def wait_random(max_delay: int = 10) -> float:
-    """
-    Asynchronous coroutine that waits for a random delay between
-    0 and max_delay (inclusive) seconds and returns the delay.
-    Args:
-        max_delay (int): The maximum delay time in seconds.
-        Default is 10.
-    Returns:
-        float: The actual delay time.
-    """
-    delay = random.uniform(0, max_delay)
-    await asyncio.sleep(delay)
-    return delay
+from typing import Any
+wait_random = __import__('0-basic_async_syntax').wait_random
 
 
 def task_wait_random(max_delay: int) -> asyncio.Task:
     """
-    Regular function that creates and returns an asyncio
-    Task for wait_random coroutine with the given max_delay.
+    Create an asyncio Task that waits for a random delay.
     Args:
-        max_delay (int): The maximum delay time in seconds.
+        max_delay (int): The maximum delay in seconds.
     Returns:
-        asyncio.Task: The asyncio task object.
+        asyncio.Task: An asyncio Task that will complete after
+        a random delay.
     """
     return asyncio.create_task(wait_random(max_delay))
-
-
-if __name__ == "__main__":
-    async def test(max_delay: int) -> None:
-        task = task_wait_random(max_delay)
-        await task
-        print(task.__class__)
-
-    asyncio.run(test(5))
